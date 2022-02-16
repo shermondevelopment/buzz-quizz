@@ -57,6 +57,10 @@ body {
 
 /* Listagem dos quizzes */
 
+.list-quizz-area {
+  margin-bottom: 100px;
+}
+
 .title-all-quizz {
   color: #000;
   font-weight: bold;
