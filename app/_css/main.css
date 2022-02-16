@@ -6,4 +6,17 @@
 
 /* Rules Css */
 
-@import url("./rules.css")
+@import url("./rules.css");
+
+
+
+.header {
+  width: 100%;
+  height: 69px;
+  background-color: var(--header-color);
+}
+
+.header-title {
+  font-weight: 700;
+  font-size: 37px;
+}
