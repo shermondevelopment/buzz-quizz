@@ -3,3 +3,7 @@
 /* Reset Css */
 
 @import url("./reset.css");
+
+/* Rules Css */
+
+@import url("./rules.css")
