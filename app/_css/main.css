@@ -37,6 +37,14 @@ body {
   margin: 77px 0;
 }
 
+.list-quizz {
+  margin-top: 12px;
+}
+
+.my-quizzes {
+  margin: 70px 0 50px 0;
+}
+
 .add-quiz-notification{
   color: #B9B9B9;
   font-size: 20px;
@@ -55,6 +63,14 @@ body {
   border: 1px dashed var(--header-color);
 }
 
+.add-quizzes {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: var(--header-color);
+  cursor: pointer;
+}
+
 /* Listagem dos quizzes */
 
 .list-quizz-area {
@@ -65,7 +81,7 @@ body {
   color: #000;
   font-weight: bold;
   font-size: 20px;
-  margin-bottom: 12px;
+  margin-right: 17px;
 }
 
 .list-card li{
@@ -117,5 +133,9 @@ body {
   .list-quizz-area {
     width: 340px;
     margin: auto;
+  }
+  .header-my-quizzes {
+    width: 340px;
+    justify-content: space-between;
   }
 }

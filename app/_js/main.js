@@ -13,7 +13,7 @@ const selectElement = (element, type) => {
 }
 
 const renderCardQuizzScreen = async () =>  {
-  const quizzContainer = selectElement('.list-quizz > ul', 'single')
+  const quizzContainer = selectElement('.list-quizz-area > .list-quizz > ul', 'single')
   const quizzes = await queryGetApi('quizzes')
   quizzes.forEach( item => {
     quizzContainer.innerHTML += TemplateCardQuizz(item.title, item.image)
