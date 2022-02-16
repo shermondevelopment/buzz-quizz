@@ -14,7 +14,6 @@ const selectElement = (element, type) => {
 
 const renderCardQuizzScreen = async () =>  {
   const quizzContainer = selectElement('.list-quizz > ul', 'single')
-  console.log(quizzContainer)
   const quizzes = await queryGetApi('quizzes')
   quizzes.forEach( item => {
     quizzContainer.innerHTML += TemplateCardQuizz(item.title, item.image)
