@@ -1,5 +1,6 @@
 :root {
   --header-color: #EC362D;
+  --main-color: #FAFAFA;
 }
 
 .d-flex {
@@ -16,4 +17,11 @@
 
 .flex-direction-column {
   flex-direction: column;
+}
+.flex-wrap-wrap {
+  flex-wrap: wrap;
+}
+
+.justify-content-between {
+  justify-content: space-between;
 }

@@ -8,7 +8,9 @@
 
 @import url("./rules.css");
 
-
+body {
+  background-color: var(--main-color);
+}
 
 .header {
   width: 100%;
@@ -43,6 +45,7 @@
   line-height: 23px;
 }
 .add-quizz-action {
+  margin-top: 20px;
   width: 140px;
   height: 40px;
   background-color: transparent;
@@ -50,4 +53,50 @@
   font-size: 21px;
   color: var(--header-color);
   border: 1px dashed var(--header-color);
+}
+
+/* Listagem dos quizzes */
+
+.title-all-quizz {
+  color: #000;
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.list-card li{
+  margin-bottom: 19px;
+}
+
+.figure-quizz, .figure-img {
+  width: 340px;
+  height: 181px;
+  position: relative;
+  border-radius: 5px;
+  cursor: pointer;
+  overflow: hidden;
+}
+.figure-img {
+  transition: transform 0.3s linear;
+}
+.figure-quizz:hover .figure-img {
+  transform: scale(1.1);
+}
+
+.quizz-title {
+  position: absolute;
+  bottom: 10px;
+  color: #fff;
+  font-size: 19px;
+  line-height: 22px;
+  padding: 10px 15px;
+}
+
+.figure-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%);
 }
