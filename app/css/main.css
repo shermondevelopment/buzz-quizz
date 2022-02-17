@@ -8,120 +8,138 @@
 
 @import url("./rules.css");
 
+/*Meu Css*/
+
+@import url("./meu.css");
 body {
-  background-color: var(--main-color);
+    background-color: var(--main-color);
 }
 
 .header {
-  width: 100%;
-  height: 69px;
-  background-color: var(--header-color);
+    width: 100%;
+    height: 69px;
+    background-color: var(--header-color);
 }
 
 .header-title {
-  font-weight: 700;
-  font-size: 37px;
+    font-weight: 700;
+    font-size: 37px;
 }
 
 .add-quizz {
-  width: 100%;
-  max-width: 1051px;
-  height: inherit;
-}
-
-.add-quizz-area {
-  width: 100%;
-  height: 181px;
-  border-radius: 5px;
-  border: 1px dashed #D5D5D5;
-  margin: 77px 0;
+    width: 100%;
+    max-width: 1051px;
+    height: inherit;
 }
 
 .list-quizz {
-  margin-top: 12px;
+    margin-top: 12px;
 }
 
 .my-quizzes {
-  margin: 70px 0 50px 0;
+    margin: 70px 0 50px 0;
 }
 
-.add-quiz-notification{
-  color: #B9B9B9;
-  font-size: 20px;
-  width: 210px;
-  text-align: center;
-  line-height: 23px;
+.add-quiz-notification {
+    color: #B9B9B9;
+    font-size: 20px;
+    width: 210px;
+    text-align: center;
+    line-height: 23px;
 }
+
 .add-quizz-action {
-  margin-top: 20px;
-  width: 140px;
-  height: 40px;
-  background-color: transparent;
-  border-radius: 50px;
-  font-size: 21px;
-  color: var(--header-color);
-  border: 1px dashed var(--header-color);
-  cursor: pointer;
+    margin-top: 20px;
+    width: 140px;
+    height: 40px;
+    background-color: transparent;
+    border-radius: 50px;
+    font-size: 21px;
+    color: var(--header-color);
+    border: 1px dashed var(--header-color);
+    cursor: pointer;
 }
 
 .add-quizzes {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background-color: var(--header-color);
-  cursor: pointer;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: var(--header-color);
+    cursor: pointer;
 }
+
 
 /* Listagem dos quizzes */
 
 .list-quizz-area {
-  margin-bottom: 100px;
+    margin-bottom: 100px;
 }
 
 .title-all-quizz {
-  color: #000;
-  font-weight: bold;
-  font-size: 20px;
-  margin-right: 17px;
+    color: #000;
+    font-weight: bold;
+    font-size: 20px;
+    margin-right: 17px;
 }
 
-.list-card li{
-  margin-bottom: 19px;
+.list-card li {
+    margin-bottom: 19px;
 }
 
-.figure-quizz, .figure-img {
-  width: 340px;
-  height: 181px;
-  position: relative;
-  border-radius: 5px;
-  cursor: pointer;
-  overflow: hidden;
-}
+.figure-quizz,
 .figure-img {
-  transition: transform 0.3s linear;
+    width: 340px;
+    height: 181px;
+    position: relative;
+    border-radius: 5px;
+    cursor: pointer;
+    overflow: hidden;
 }
+
+.figure-img {
+    transition: transform 0.3s linear;
+}
+
 .figure-quizz:hover .figure-img {
-  transform: scale(1.1);
+    transform: scale(1.1);
 }
 
 .quizz-title {
-  position: absolute;
-  bottom: 10px;
-  color: #fff;
-  font-size: 19px;
-  line-height: 22px;
-  padding: 10px 15px;
+    position: absolute;
+    bottom: 10px;
+    color: #fff;
+    font-size: 19px;
+    line-height: 22px;
+    padding: 10px 15px;
 }
 
 .figure-gradient {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%);
 }
 
+<<<<<<< HEAD
+@media (max-width: 415px) {
+    .add-quizz-area {
+        width: 340px;
+        margin: 77px auto;
+    }
+    .list-card {
+        justify-content: center;
+    }
+    .list-quizz-area {
+        width: 340px;
+        margin: auto;
+    }
+    .header-my-quizzes {
+        width: 340px;
+        justify-content: space-between;
+    }
+=======
 
 /* Exibição Banner Quiz */
 
@@ -290,4 +308,5 @@ body {
     margin-top: 20px;
     padding: 0;
   }
+>>>>>>> a4dff4d60c824ebda316db09fac3d3e54410e54a
 }
