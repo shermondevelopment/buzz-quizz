@@ -255,3 +255,39 @@ body {
     justify-content: space-between;
   }
 }
+
+/* Media  Quizz */
+
+@media (max-width: 415px) {
+  .title-quizz {
+    font-size: 19px;
+    left:23%;
+    bottom: 45%;
+  }
+  .questions {
+    padding: 27px 14px;
+  }
+  .question-title {
+    height: 90px;
+  }
+  .question-title h2 {
+    font-size: 19px;
+    text-align: center;
+    line-height: 23px;
+  }
+  .question-image img {
+    width: 163px;
+    height: 113px;
+  }
+  .question-image img:last-child {
+    width: 100%;
+  }
+  .header-result {
+    height: 99px;
+    padding: 0 10px;
+  }
+  .title-result {
+    margin-top: 20px;
+    padding: 0;
+  }
+}
