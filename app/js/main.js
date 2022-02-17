@@ -46,7 +46,6 @@ const renderCardQuizzScreen = async() => {
 /* No momento do click do quiz a função openedQuizz e chamada colocando o
 */
 
-<<<<<<< HEAD
 function openedQuizz(element) {
     const sectionListQuizzToInvisible = selectElement('.add-quizz', 'single')
     makeElementInivisble(sectionListQuizzToInvisible)
@@ -107,48 +106,8 @@ function shuffleArray(arr) {
     return arr;
 }
 
-/*
-          let divNova = document.createElement("div");
-            divNova.className = "card";
-            divNova.id = cardId;
-            divNova.setAttribute("data-identifier", "card");
-            divNova.addEventListener("click", doAFlip);
-            document.getElementById("cards").appendChild(divNova);
-            let divFront = document.createElement("div");
-            divFront.className = "front-face face";
-            divFront.id = "front" + cardId;
-            divFront.setAttribute("data-identifier", "front-face");
-            document.getElementById(cardId).appendChild(divFront);
-            let divBack = document.createElement("div");
-            divBack.className = "back-face face";
-            divBack.id = "back" + cardId;
-            divBack.setAttribute("data-identifier", "back-face");
-            document.getElementById(cardId).appendChild(divBack);
-            let imagemNovaFront = document.createElement("img");
-            imagemNovaFront.src = cardGifs[0];
-            imagemNovaFront.id = "frontParrot";
-            document.getElementById("front" + cardId).appendChild(imagemNovaFront);
-            let imagemNovaBack = document.createElement("img");
-            imagemNovaBack.src = cardGifs[arrayCards[cardId - 1]];
-            imagemNovaBack.id = "backParrot";
-            document.getElementById("back" + cardId).appendChild(imagemNovaBack);
-    */
-
-const makeElementInivisble = (element) => {
-    element.style.display = "none"
-=======
-function openedQuizz(elementQuizz) {
- const sectionListQuizzToInvisible = selectElement('.add-quizz', 'single')
- const quizzQuestion = selectElement('.quiz-questions', 'single')
- /* esconde a lista de quizz */
- makeElementInivisble(sectionListQuizzToInvisible, true)
- /* mostra um unico quizz */
- makeElementInivisble(quizzQuestion, false)
-}
-
 const makeElementInivisble = (element, invisible) => {
-  invisible ? element.style.display = "none" : element.style.display = "block"
->>>>>>> a4dff4d60c824ebda316db09fac3d3e54410e54a
+    invisible ? element.style.display = "none" : element.style.display = "block"
 }
 
 renderCardQuizzScreen()
