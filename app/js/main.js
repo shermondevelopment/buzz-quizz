@@ -48,11 +48,15 @@ const renderCardQuizzScreen = async () =>  {
 
 function openedQuizz(elementQuizz) {
  const sectionListQuizzToInvisible = selectElement('.add-quizz', 'single')
- makeElementInivisble(sectionListQuizzToInvisible)
+ const quizzQuestion = selectElement('.quiz-questions', 'single')
+ /* esconde a lista de quizz */
+ makeElementInivisble(sectionListQuizzToInvisible, true)
+ /* mostra um unico quizz */
+ makeElementInivisble(quizzQuestion, false)
 }
 
-const makeElementInivisble = (element) => {
-  element.style.display = "none"
+const makeElementInivisble = (element, invisible) => {
+  invisible ? element.style.display = "none" : element.style.display = "block"
 }
 
 renderCardQuizzScreen()
