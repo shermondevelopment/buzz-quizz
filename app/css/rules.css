@@ -1,7 +1,12 @@
 :root {
   --header-color: #EC362D;
   --main-color: #FAFAFA;
+  --text-wrong: #FF4B4B;
+  --text-correct: #009C22;
+
 }
+
+/* Regras de flex */
 
 .d-flex {
   display: flex;
@@ -24,4 +29,10 @@
 
 .justify-content-between {
   justify-content: space-between;
+}
+
+/* Regras de layout */
+
+.header-result {
+  background-color: var(--header-color) !important;
 }
