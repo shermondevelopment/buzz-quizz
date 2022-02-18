@@ -156,9 +156,7 @@ body {
 .title-quizz {
     width: max-content;
     font-size: 39px;
-    position: absolute;
-    bottom: 40%;
-    left: 35%;
+    margin: -135px auto;
 }
 
 
@@ -271,8 +269,6 @@ body {
 @media (max-width: 415px) {
     .title-quizz {
         font-size: 19px;
-        left: 23%;
-        bottom: 45%;
     }
     .questions {
         padding: 27px 14px;
@@ -299,5 +295,8 @@ body {
     .title-result {
         margin-top: 20px;
         padding: 0;
+    }
+    .header-result + .question-area-images{ 
+        flex-wrap: wrap;
     }
 }
