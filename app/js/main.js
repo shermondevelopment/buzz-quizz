@@ -3,7 +3,7 @@
 */
 
 const TemplateCardQuizz = (id, title, figure) => {
-  return `
+    return `
     <li data-id="${id}" onclick="openedQuizz(this)">
       <figure class="figure-quizz">
         <img class="figure-img" src="${figure}"
@@ -20,43 +20,47 @@ const TemplateCardQuizz = (id, title, figure) => {
 
 /* Função de Consulta do Tipo GET */
 
-const  queryGetApi = async (router) => {
-  const queryUrl = await fetch(`https://mock-api.driven.com.br/api/v4/buzzquizz/${router}`);
-  const queryResponseJson = await queryUrl.json()
-  return queryResponseJson
+const queryGetApi = async(router) => {
+    const queryUrl = await fetch(`https://mock-api.driven.com.br/api/v4/buzzquizz/${router}`);
+    const queryResponseJson = await queryUrl.json()
+    return queryResponseJson
 }
 
 /* Função selectElement seleciona elementos html */
 
 const selectElement = (element, type) => {
-  return (type === 'all') ? document.querySelectorAll(element) : document.querySelector(element);
+    return (type === 'all') ? document.querySelectorAll(element) : document.querySelector(element);
 }
 
 /* Função renderCardQuizzScreen renderiza elementos na tela */
 
-const renderCardQuizzScreen = async () =>  {
-  const quizzContainer = selectElement('.list-quizz-area > .list-quizz > ul', 'single')
-  const quizzes = await queryGetApi('quizzes')
-  quizzes.forEach( item => {
-    quizzContainer.innerHTML += TemplateCardQuizz(item.id, item.title, item.image)
-  } )
+const renderCardQuizzScreen = async() => {
+    const quizzContainer = selectElement('.list-quizz-area > .list-quizz > ul', 'single')
+    const quizzes = await queryGetApi('quizzes')
+    quizzes.forEach(item => {
+        quizzContainer.innerHTML += TemplateCardQuizz(item.id, item.title, item.image)
+    })
 }
 
 /*
 /* No momento do click do quiz a função openedQuizz e chamada colocando o
 */
 
-function openedQuizz(elementQuizz) {
- const sectionListQuizzToInvisible = selectElement('.add-quizz', 'single')
- const quizzQuestion = selectElement('.quiz-questions', 'single')
- /* esconde a lista de quizz */
- makeElementInivisble(sectionListQuizzToInvisible, true)
- /* mostra um unico quizz */
- makeElementInivisble(quizzQuestion, false)
+function openedQuizz(element) {
+    const sectionListQuizzToInvisible = selectElement('.add-quizz', 'single')
+    makeElementInivisble(sectionListQuizzToInvisible)
+    document.getElementById("open-quiz").style.display = 'block';
+
+    let myPromise = queryGetApi(`quizzes/${element.dataset.id}`);
+    myPromise.then(titleQuiz);
 }
 
+/*
+/* makeElementInvisible mostra e esconde o elemento especificado no parametros 
+*/
+
 const makeElementInivisble = (element, invisible) => {
-  invisible ? element.style.display = "none" : element.style.display = "block"
+    invisible ? element.style.display = "none" : element.style.display = "block"
 }
 
 renderCardQuizzScreen()
