@@ -70,7 +70,9 @@ const renderTemplateScreen = async (element, fetchRouter, callbackTemplate) => {
 
 const renderTemplateQuestion = async (element, fetchRouter, callbackTemplate) => {
   const routerRequest = await queryGetApi(fetchRouter)
+  console.log(routerRequest)
   const { id, title, image } = routerRequest
+  defineProperyQuizz(title, image)
   routerRequest.questions.forEach(item => {
       element.innerHTML += callbackTemplate({id, title, image}, item.answers).replace(/,/g, '')
   })
@@ -95,6 +97,16 @@ function openedQuizz(element) {
 
 const makeElementInivisble = (element, invisible) => {
     invisible ? element.style.display = "none" : element.style.display = "block"
+}
+
+/*
+/* Define Propery of Quizz
+/* Ex: title, image
+*/
+
+const defineProperyQuizz = (title, image) => {
+  selectElement('.title-quizz', 'single').innerHTML = title
+  selectElement('.quiz-image').src = image
 }
 
 renderTemplateScreen(selectElement('.list-quizz-area > .list-quizz > ul', 'single'), 'quizzes', TemplateCardQuizz)
