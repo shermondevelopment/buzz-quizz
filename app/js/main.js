@@ -2,21 +2,48 @@
 /* Template CardQuizz
 */
 
-const TemplateCardQuizz = (id, title, figure) => {
+const TemplateCardQuizz = (props) => {
     return `
-    <li data-id="${id}" onclick="openedQuizz(this)">
+    <li data-id="${props.id}" onclick="openedQuizz(this)">
       <figure class="figure-quizz">
-        <img class="figure-img" src="${figure}"
+        <img class="figure-img" src="${props.image}"
           alt="simpson" />
         <div class="figure-gradient">
         </div>
-        <figcaption class="quizz-title">${title}
+        <figcaption class="quizz-title">
+         ${props.title}
         </figcaption>
       </figure>
     </li>
   `
 }
 
+const TemplateAnswers = (answers) => {
+  return `
+      <div class="question-image d-flex flex-direction-column" data-correct=${answers.isCorrectAnswer}>
+          <img src="${answers.image}"
+              alt="question" class="" />
+          <span class="title-image">${answers.text}</span>
+      </div>
+  `
+}
+
+/*
+/* Template Quizz Questions
+*/
+
+const TemplateQuizzQuestion = (props, answers) => {
+  return `
+      <section class="questions" data-id=${props.id} onclick="checkAnswer()">
+        <div class="question-title d-flex justify-content-center align-items-center">
+            <h2>${props.title}</h2>
+        </div>
+        <div class="question-area-images d-flex flex-wrap-wrap justify-content-between">
+            ${answers.map( item => TemplateAnswers(item) )}
+        </div>
+     </section>
+  `
+}
 
 /* Função de Consulta do Tipo GET */
 
@@ -34,12 +61,19 @@ const selectElement = (element, type) => {
 
 /* Função renderCardQuizzScreen renderiza elementos na tela */
 
-const renderCardQuizzScreen = async() => {
-    const quizzContainer = selectElement('.list-quizz-area > .list-quizz > ul', 'single')
-    const quizzes = await queryGetApi('quizzes')
-    quizzes.forEach(item => {
-        quizzContainer.innerHTML += TemplateCardQuizz(item.id, item.title, item.image)
+const renderTemplateScreen = async (element, fetchRouter, callbackTemplate) => {
+    const routerRequest = await queryGetApi(fetchRouter)
+    routerRequest.forEach(item => {
+        element.innerHTML += callbackTemplate(item)
     })
+}
+
+const renderTemplateQuestion = async (element, fetchRouter, callbackTemplate) => {
+  const routerRequest = await queryGetApi(fetchRouter)
+  const { id, title, image } = routerRequest
+  routerRequest.questions.forEach(item => {
+      element.innerHTML += callbackTemplate({id, title, image}, item.answers).replace(/,/g, '')
+  })
 }
 
 /*
@@ -47,12 +81,12 @@ const renderCardQuizzScreen = async() => {
 */
 
 function openedQuizz(element) {
-    const sectionListQuizzToInvisible = selectElement('.add-quizz', 'single')
-    const questionQuizz = selectElement('.quiz-questions', 'single')
     /* Esconde o elemento sectionListQuizzToInvisible */
-    makeElementInivisble(sectionListQuizzToInvisible, true)
+    makeElementInivisble( selectElement('.add-quizz', 'single'), true)
     /* Mostra o elemento questionQuizz */
-    makeElementInivisble(questionQuizz, false)
+    makeElementInivisble(selectElement('.quiz-questions', 'single'), false)
+    
+    renderTemplateQuestion(selectElement('.quiz-questions-area', 'single'), `quizzes/${element.dataset.id}`, TemplateQuizzQuestion)
 }
 
 /*
@@ -63,4 +97,4 @@ const makeElementInivisble = (element, invisible) => {
     invisible ? element.style.display = "none" : element.style.display = "block"
 }
 
-renderCardQuizzScreen()
+renderTemplateScreen(selectElement('.list-quizz-area > .list-quizz > ul', 'single'), 'quizzes', TemplateCardQuizz)
