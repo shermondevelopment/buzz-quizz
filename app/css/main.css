@@ -8,9 +8,6 @@
 
 @import url("./rules.css");
 
-/*Meu Css*/
-
-@import url("./meu.css");
 body {
     background-color: var(--main-color);
 }
@@ -30,6 +27,13 @@ body {
     width: 100%;
     max-width: 1051px;
     height: inherit;
+}
+
+.add-quizz-area {
+    margin:77px 0;
+    height: 181px;
+    border: 1px dashed #D5D5D5;
+    border-radius: 5px;
 }
 
 .list-quizz {

@@ -48,15 +48,15 @@ const renderCardQuizzScreen = async() => {
 
 function openedQuizz(element) {
     const sectionListQuizzToInvisible = selectElement('.add-quizz', 'single')
-    makeElementInivisble(sectionListQuizzToInvisible)
-    document.getElementById("open-quiz").style.display = 'block';
-
-    let myPromise = queryGetApi(`quizzes/${element.dataset.id}`);
-    myPromise.then(titleQuiz);
+    const questionQuizz = selectElement('.quiz-questions', 'single')
+    /* Esconde o elemento sectionListQuizzToInvisible */
+    makeElementInivisble(sectionListQuizzToInvisible, true)
+    /* Mostra o elemento questionQuizz */
+    makeElementInivisble(questionQuizz, false)
 }
 
 /*
-/* makeElementInvisible mostra e esconde o elemento especificado no parametros 
+/* makeElementInvisible mostra e esconde o elemento especificado nos parametros 
 */
 
 const makeElementInivisble = (element, invisible) => {
