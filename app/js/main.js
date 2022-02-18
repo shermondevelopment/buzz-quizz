@@ -1,3 +1,5 @@
+let countClickAnswer = 0;
+
 /*
 /* Template CardQuizz
 */
@@ -20,7 +22,7 @@ const TemplateCardQuizz = (props) => {
 
 const TemplateAnswers = (answers) => {
   return `
-      <div class="question-image d-flex flex-direction-column" data-correct=${answers.isCorrectAnswer}>
+      <div class="question-image d-flex flex-direction-column" data-correct="${answers.isCorrectAnswer ? 'true' : ''}" onclick="checkAnswer(this)">
           <img src="${answers.image}"
               alt="question" class="" />
           <span class="title-image">${answers.text}</span>
@@ -34,7 +36,7 @@ const TemplateAnswers = (answers) => {
 
 const TemplateQuizzQuestion = (props, answers) => {
   return `
-      <section class="questions" data-id=${props.id} onclick="checkAnswer()">
+      <section class="questions" data-id=${props.id}>
         <div class="question-title d-flex justify-content-center align-items-center">
             <h2>${props.title}</h2>
         </div>
@@ -70,7 +72,6 @@ const renderTemplateScreen = async (element, fetchRouter, callbackTemplate) => {
 
 const renderTemplateQuestion = async (element, fetchRouter, callbackTemplate) => {
   const routerRequest = await queryGetApi(fetchRouter)
-  console.log(routerRequest)
   const { id, title, image } = routerRequest
   defineProperyQuizz(title, image)
   routerRequest.questions.forEach(item => {
@@ -107,6 +108,36 @@ const makeElementInivisble = (element, invisible) => {
 const defineProperyQuizz = (title, image) => {
   selectElement('.title-quizz', 'single').innerHTML = title
   selectElement('.quiz-image').src = image
+}
+
+/*
+/* Checar Resposta ao click
+*/
+
+const checkAnswer = (element) => {
+  countClickAnswer += 1;
+  !!element.dataset.correct === true ? element.classList.add('check', 'true') : element.classList.add('check', 'false')
+  checkAllAnswer(element.parentNode, element.classList[0])
+}
+
+/*
+/* scrollIntoElement faz um scroll até o proximo elemento irmao
+*/
+
+const scrollIntoElement = (element) => {
+    element && element.scrollIntoView({ behavior: 'smooth' })
+}
+
+/*
+/* Verifica se todas as opções foram respondidas 
+*/
+
+const checkAllAnswer = (element, childs) => {
+ const answers = element.querySelectorAll(`.${childs}`)
+ if(answers.length === countClickAnswer) {
+   scrollIntoElement(element.parentNode.nextElementSibling)
+   countClickAnswer = 0;
+ }
 }
 
 renderTemplateScreen(selectElement('.list-quizz-area > .list-quizz > ul', 'single'), 'quizzes', TemplateCardQuizz)
