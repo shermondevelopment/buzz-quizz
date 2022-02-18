@@ -70,12 +70,21 @@ const renderTemplateScreen = async (element, fetchRouter, callbackTemplate) => {
     })
 }
 
+function shuffleArray(arr) {
+  const newArr = arr.slice()
+  for (let i = newArr.length - 1; i > 0; i--) {
+      const rand = Math.floor(Math.random() * (i + 1));
+      [newArr[i], newArr[rand]] = [newArr[rand], newArr[i]];
+  }
+  return newArr
+}
+
 const renderTemplateQuestion = async (element, fetchRouter, callbackTemplate) => {
   const routerRequest = await queryGetApi(fetchRouter)
   const { id, title, image } = routerRequest
   defineProperyQuizz(title, image)
-  routerRequest.questions.forEach(item => {
-      element.innerHTML += callbackTemplate({id, title, image}, item.answers).replace(/,/g, '')
+  routerRequest.questions.map(item => {
+      element.innerHTML += callbackTemplate({id, title, image}, shuffleArray(item.answers)).replace(/,/g, '')
   })
 }
 
@@ -135,7 +144,7 @@ const scrollIntoElement = (element) => {
 const checkAllAnswer = (element, childs) => {
  const answers = element.querySelectorAll(`.${childs}`)
  if(answers.length === countClickAnswer) {
-   scrollIntoElement(element.parentNode.nextElementSibling)
+   setTimeout(() => scrollIntoElement(element.parentNode.nextElementSibling), 2000)
    countClickAnswer = 0;
  }
 }
