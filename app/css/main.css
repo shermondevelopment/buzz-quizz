@@ -62,8 +62,12 @@
         width: 163px;
         height: 113px;
     }
+    .question-image .breakword {
+        width: 163px;
+    }
     .question-image img:last-child {
         width: 100%;
+        height: auto;
     }
     .header-result {
         height: 99px;

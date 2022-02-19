@@ -1,4 +1,8 @@
 let countClickAnswer = 0;
+let answerHits = 0;
+let numberOfQuestions = 0;
+let levels
+let id
 
 /* 
 /* Template Result Quizz
@@ -14,7 +18,7 @@ const TemplateResultQuizz = () => {
       <div class="question-area-images d-flex justify-content-between">
           <div class="question-image d-flex flex-direction-column">
               <img src="https://img.wattpad.com/486cbed0c3cff15cd35b386c8212f45b57457354/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f776174747061642d6d656469612d736572766963652f53746f7279496d6167652f4c6d4c6b54624578474b384e47413d3d2d313033313135333531332e313636366137343230383365333838643130393338393638373634362e6a7067?s=fit&w=720&h=720"
-                  alt="question" style="height: 273px" class="image-result" />
+                  alt="question" class="image-result" />
           </div>
           <div class="question-image d-flex flex-direction-column">
               <span class="title-image title-result">
@@ -26,7 +30,7 @@ const TemplateResultQuizz = () => {
       </div>
     </section>
       <div class="question-options d-flex flex-direction-column align-items-center">
-      <button class="reset-quizz">Reiniciar Quizz</button>
+      <button class="reset-quizz" onclick="resetQuiz()">Reiniciar Quizz</button>
       <a href="" class="quizz-back-home">Voltar para home</a>
       </div>
     </div>
@@ -58,7 +62,7 @@ const TemplateAnswers = (answers) => {
       <div class="question-image d-flex flex-direction-column" data-correct="${answers.isCorrectAnswer ? 'true' : ''}" onclick="checkAnswer(this)">
           <img src="${answers.image}"
               alt="question" class="" />
-          <span class="title-image">${answers.text}</span>
+          <span class="title-image breakword">${answers.text}</span>
       </div>
   `
 }
@@ -70,7 +74,7 @@ const TemplateAnswers = (answers) => {
 const TemplateQuizzQuestion = (props, answers) => {
   return `
       <section class="questions" data-id=${props.id}>
-        <div class="question-title d-flex justify-content-center align-items-center">
+        <div class="question-title d-flex justify-content-center align-items-center"  style="background: ${props.color}">
             <h2>${props.title}</h2>
         </div>
         <div class="question-area-images d-flex flex-wrap-wrap justify-content-between">
@@ -114,10 +118,12 @@ function shuffleArray(arr) {
 
 const renderTemplateQuestion = async (element, fetchRouter, callbackTemplate) => {
   const routerRequest = await queryGetApi(fetchRouter)
+  numberOfQuestions = routerRequest.questions.length
   const { id, title, image } = routerRequest
+  levels = routerRequest.levels
   defineProperyQuizz(title, image)
   routerRequest.questions.map(item => {
-      element.innerHTML += callbackTemplate({id, title, image}, shuffleArray(item.answers)).replace(/,/g, '')
+      element.innerHTML += callbackTemplate({id, title, image, color: item.color}, shuffleArray(item.answers)).replace(/,/g, '')
   })
   element.innerHTML += TemplateResultQuizz()
 }
@@ -127,12 +133,14 @@ const renderTemplateQuestion = async (element, fetchRouter, callbackTemplate) =>
 */
 
 function openedQuizz(element) {
+    /* salva o id */
+    id = element.dataset.id
     /* Esconde o elemento sectionListQuizzToInvisible */
     makeElementInivisble( selectElement('.add-quizz', 'single'), true)
     /* Mostra o elemento questionQuizz */
     makeElementInivisble(selectElement('.quiz-questions', 'single'), false)
     
-    renderTemplateQuestion(selectElement('.quiz-questions-area', 'single'), `quizzes/${element.dataset.id}`, TemplateQuizzQuestion)
+    renderTemplateQuestion(selectElement('.quiz-questions-area', 'single'), `quizzes/${id}`, TemplateQuizzQuestion)
 }
 
 /*
@@ -159,6 +167,7 @@ const defineProperyQuizz = (title, image) => {
 
 const checkAnswer = (element) => {
   countClickAnswer += 1;
+  (!!element.dataset.correct === true && countClickAnswer === 1) && countHits()
   !!element.dataset.correct === true ? element.classList.add('check', 'true') : element.classList.add('check', 'false')
   checkAllAnswer(element.parentNode, element.classList[0])
 }
@@ -178,10 +187,62 @@ const scrollIntoElement = (element) => {
 const checkAllAnswer = (element, childs) => {
  const answers = element.querySelectorAll(`.${childs}`)
  if(answers.length === countClickAnswer) {
+   defineResult()
    makeElementInivisble(selectElement('.section-result', 'single'), false)
    setTimeout(() => scrollIntoElement(element.parentNode.nextElementSibling), 2000)
    countClickAnswer = 0;
  }
 }
 
+/* 
+/* A função countHits conta o total de acertos
+*/
+
+const countHits = () => {
+  answerHits += 1;
+}
+
+/*
+/* Definir porcentagem de acertos
+*/
+
+const setPercentage = () => {
+  return Math.ceil((answerHits * 100) / numberOfQuestions);
+}
+
+/*
+/* Defini o resultado do card
+*/
+
+const defineResult = () => {
+  let levelResult = selectElement('.header-result h2', 'single');
+  let titleResult = selectElement('.title-result', 'single')
+  if(setPercentage() >= 50) {
+    selectElement('.image-result').src = levels[1].image
+    levelResult.innerHTML = `${setPercentage()}% de acerto: ${levels[1].title}`
+    titleResult.innerHTML = `${levels[1].text}`
+  } else {
+    selectElement('.image-result').src = levels[0].image
+    levelResult.innerHTML = `${setPercentage()}% de acerto: ${levels[0].title}`
+    titleResult.innerHTML = `${levels[0].text}`
+  }
+  
+}
+
+/*
+/*  Reset Quizz
+*/
+
+const resetQuiz = () => {
+  /* reseta o total de perguntas */
+  numberOfQuestions = 0;
+  /* reseta o total de acertos */
+  answerHits = 0;
+  /* Faz um scroll para a primeira pergunta */
+  scrollIntoElement(selectElement('.questions', 'single'))
+  /* Remove todas as perguntas */
+  selectElement('.quiz-questions-area', 'single').innerHTML = ""
+  /* Renderiza novamente as perguntas na tela zeradas */
+  renderTemplateQuestion(selectElement('.quiz-questions-area', 'single'), `quizzes/${id}`, TemplateQuizzQuestion)
+}
 renderTemplateScreen(selectElement('.list-quizz-area > .list-quizz > ul', 'single'), 'quizzes', TemplateCardQuizz)
