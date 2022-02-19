@@ -16,6 +16,7 @@
 }
 
 .form-create-quizz {
+  width: 100%;
   background: #fff;
   padding: 20px;
   margin-top: 27px;
@@ -44,4 +45,39 @@
   border-radius: 15px;
   font-size: 16px;
   margin-top: 85px;
+}
+
+.title-input {
+  color: #000;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.question-form {
+  margin-bottom: 28px;
+}
+
+.closed {
+  width: 600px;
+  height: 74px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 3.3s linear;
+
+}
+.closed .question-form {
+  display: none;
+}
+.closed .title-input {
+  margin:0;
+}
+.edit {
+  display: none;
+}
+.closed .edit {
+  display: block;
+  position: absolute;
+  right: 15px;
 }

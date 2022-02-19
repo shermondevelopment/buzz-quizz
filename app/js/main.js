@@ -264,7 +264,20 @@ const createQuizz = () => {
 }
 
 function addQuizz(event) {
-  console.log(event)
   event.preventDefault()
+  let quizz = {
+    title: selectElement('input[name="title"]', 'single').value,
+    image: selectElement('input[name="url"]', 'single').value
+  }
+  /* Esconde o formulario de informações básica */
+  selectElement('.quizz-info-basic', 'single').style.display = "none"
+}
+
+function accordion(element) {
+  selectElement('.question', 'all').forEach( item => {
+    item.classList.add('closed')
+  } )
+  element.classList.remove('closed')
+
 }
 renderTemplateScreen(selectElement('.list-quizz-area > .list-quizz > ul', 'single'), 'quizzes', TemplateCardQuizz)
