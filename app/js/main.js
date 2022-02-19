@@ -1,8 +1,10 @@
 let countClickAnswer = 0;
 let answerHits = 0;
 let numberOfQuestions = 0;
-let levels
-let id
+let levels;
+let numberOfAnswers = 0;
+let id;
+let countClickshowResults = 0;
 
 /* 
 /* Template Result Quizz
@@ -78,7 +80,10 @@ const TemplateQuizzQuestion = (props, answers) => {
             <h2>${props.title}</h2>
         </div>
         <div class="question-area-images d-flex flex-wrap-wrap justify-content-between">
-            ${answers.map( item => TemplateAnswers(item) )}
+            ${answers.map( (item, index) => {
+              numberOfAnswers += 1
+              return TemplateAnswers(item)
+            } )}
         </div>
      </section>
   `
@@ -166,6 +171,7 @@ const defineProperyQuizz = (title, image) => {
 */
 
 const checkAnswer = (element) => {
+  countClickshowResults += 1;
   countClickAnswer += 1;
   (!!element.dataset.correct === true && countClickAnswer === 1) && countHits()
   !!element.dataset.correct === true ? element.classList.add('check', 'true') : element.classList.add('check', 'false')
@@ -187,10 +193,13 @@ const scrollIntoElement = (element) => {
 const checkAllAnswer = (element, childs) => {
  const answers = element.querySelectorAll(`.${childs}`)
  if(answers.length === countClickAnswer) {
-   defineResult()
-   makeElementInivisble(selectElement('.section-result', 'single'), false)
    setTimeout(() => scrollIntoElement(element.parentNode.nextElementSibling), 2000)
    countClickAnswer = 0;
+ }
+ if(countClickshowResults === numberOfAnswers) {
+    defineResult()
+    makeElementInivisble(selectElement('.section-result', 'single'), false)
+    setTimeout(() => scrollIntoElement(element.parentNode.nextElementSibling), 2000)
  }
 }
 
