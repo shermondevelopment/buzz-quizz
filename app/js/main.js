@@ -254,4 +254,17 @@ const resetQuiz = () => {
   /* Renderiza novamente as perguntas na tela zeradas */
   renderTemplateQuestion(selectElement('.quiz-questions-area', 'single'), `quizzes/${id}`, TemplateQuizzQuestion)
 }
+
+/*
+/* Create Quizz
+*/
+const createQuizz = () => {
+  selectElement('.add-quizz', 'single').style.display = "none"
+  selectElement('.quiz-questions', 'single').style.display = "none"
+}
+
+function addQuizz(event) {
+  console.log(event)
+  event.preventDefault()
+}
 renderTemplateScreen(selectElement('.list-quizz-area > .list-quizz > ul', 'single'), 'quizzes', TemplateCardQuizz)

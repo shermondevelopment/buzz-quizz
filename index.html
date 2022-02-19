@@ -19,10 +19,10 @@
     </header>
 
     <main class="d-flex justify-content-center">
-        <section class="add-quizz d-flex flex-direction-column justify-content-center">
+        <section class="add-quizz d-flex flex-direction-column justify-content-center" style="display: none">
             <section class="add-quizz-area d-flex justify-content-center align-items-center flex-direction-column">
                 <span class="add-quiz-notification">Você não criou nenhum quizz ainda :(</span>
-                <button class="add-quizz-action">Criar Quizz</button>
+                <button class="add-quizz-action" onclick="createQuizz()">Criar Quizz</button>
             </section>
             <section class="my-quizzes d-flex flex-direction-column align-items-center" style="display: none">
                 <div class="header-my-quizzes d-flex align-items-center">
@@ -54,6 +54,23 @@
             </div>
             <div class="quiz-questions-area d-flex align-items-center flex-direction-column">
 
+            </div>
+        </section>
+        <section class="create-quizz d-flex justify-content-center">
+            <div class="create-quizz-content">
+                <h2 class="create-quizz-title">Comece pelo Começo</h2>
+                <form method="post" class="d-flex flex-direction-column align-items-center" onsubmit="addQuizz(event)">
+                    <div class="form-create-quizz">
+                        <input type="text" name="title" placeholder="Título do seu quizz" pattern="\w{20,60}"
+                            required />
+                        <input type="url" name="url" placeholder="URL da imagem do seu quizz" required />
+                        <input type="text" name="qtQuestions" placeholder="Quantidade de perguntas do quizz"
+                            pattern="\d\d\d" required />
+                        <input type="text" name="qtAnswers" placeholder="Quantidade de níveis do quizz" pattern="\d{2,}"
+                            required />
+                    </div>
+                    <button type="submit" class="button">Prosseguir pra criar perguntas</button>
+                </form>
             </div>
         </section>
     </main>

@@ -21,6 +21,9 @@
 
 @import url("./quizz-questions.css");
 
+/* Create Quizz Fors */
+
+@import url('./create-quizz.css');
 
 @media (max-width: 415px) {
     .add-quizz-area {
