@@ -5,6 +5,8 @@ let levels;
 let numberOfAnswers = 0;
 let id;
 let countClickshowResults = 0;
+let newQuizz = {}
+let myQuizzes = []
 
 /* 
 /* Template Result Quizz
@@ -261,16 +263,170 @@ const resetQuiz = () => {
 const createQuizz = () => {
   selectElement('.add-quizz', 'single').style.display = "none"
   selectElement('.quiz-questions', 'single').style.display = "none"
+  selectElement('.create-quizz', 'single').style.display = "flex"
 }
 
-function addQuizz(event) {
+const renderTemplateSuccess = (id, title, image) => {
+  return `
+      <div class="myquizz-success d-flex flex-direction-column align-items-center">
+        <h2 class="create-quizz-title">Seu quizz está pronto</h2>
+        <div class="card-result">
+            <img src="${image}"
+                class="image-myquizz" />
+            <h2 class="quizz-title">${title}</h2>
+        </div>
+        <button type="submit" data-id="${id}" class="button" onclick="openedQuizz(this), hidden()">Acessar Quizz</button><br /><br />
+        <a href="" class="quizz-back-home">Voltar para home</a>
+      </div>
+  `
+}
+
+const queryPostApi = async () => {
+  const addQuizz = await fetch(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes`, {
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(newQuizz)
+  })
+  return await addQuizz.json()
+}
+
+function addQuizzInfoBasic(event) {
   event.preventDefault()
-  let quizz = {
-    title: selectElement('input[name="title"]', 'single').value,
+  newQuizz = {
+    title: selectElement('input[name="titleQuizz"]', 'single').value,
     image: selectElement('input[name="url"]', 'single').value
   }
   /* Esconde o formulario de informações básica */
-  selectElement('.quizz-info-basic', 'single').style.display = "none"
+  selectElement('.post-basic', 'single').style.display = "none"
+  selectElement('.post-question', 'single').style.display = "block"
+}
+
+function addQuizzQuestions(event) {
+  event.preventDefault()
+  newQuizz.questions = [
+    {
+      title: selectElement('input[name="title"]', 'single').value,
+      color: selectElement('input[name="color"]', 'single').value,
+      answers: [
+        {
+          text: selectElement('input[name="questionCorrect"]', 'single').value,
+          image: selectElement('input[name="questionCorrectImage"]', 'single').value,
+          isCorrectAnswer: true
+        },
+        {
+          text: selectElement('input[name="questionIncorrectFirst"]').value,
+          image: selectElement('input[name="questionIncorrectImageFirst"]').value,
+          isCorrectAnswer: false
+        },
+        {
+          text: selectElement('input[name="questionIncorrectSecond"]').value,
+          image: selectElement('input[name="questonIncorrectImageSecond"]').value,
+          isCorrectAnswer: false
+        },
+        {
+          text: selectElement('input[name="questionIncorrectThird"]').value,
+          image: selectElement('input[name="questionIncorrectImageThird"]').value,
+          isCorrectAnswer: false
+        }
+      ]
+    },
+    {
+      title: selectElement('input[name="titleTwo"]', 'single').value,
+      color: selectElement('input[name="colorTwo"]', 'single').value,
+      answers: [
+        {
+          text: selectElement('input[name="questionCorrectTwo"]').value,
+          image: selectElement('input[name="urlFirst"]', 'single').value,
+          isCorrectAnswer: true,
+        },
+        {
+          text: selectElement('input[name="questiontitle1"]').value,
+          image: selectElement('input[name="questioimage1"]').value,
+          isCorrectAnswer: false
+        },
+        {
+          text: selectElement('input[name="questiontitle2"]').value,
+          image: selectElement('input[name="questionImage2"]').value,
+          isCorrectAnswer: false
+        },
+        {
+          text: selectElement('input[name="questiontitle3"]').value,
+          image: selectElement('input[name="questionImage3"]').value,
+          isCorrectAnswer: false
+        },
+      ]
+    },
+    {
+      title: selectElement('input[name="titleThree"]', 'single').value,
+      color: selectElement('input[name="colorThree"]', 'single').value,
+      answers: [
+        {
+          text: selectElement('input[name="questionCorrect4"]').value,
+          image: selectElement('input[name="url4"]', 'single').value,
+          isCorrectAnswer: true,
+        },
+        {
+          text: selectElement('input[name="questionInocrrect5"]').value,
+          image: selectElement('input[name="url5"]').value,
+          isCorrectAnswer: false
+        },
+        {
+          text: selectElement('input[name="questionIncorrect6"]').value,
+          image: selectElement('input[name="url6"]').value,
+          isCorrectAnswer: false
+        },
+        {
+          text: selectElement('input[name="questionInocrrect7"]').value,
+          image: selectElement('input[name="url7"]').value,
+          isCorrectAnswer: false
+        },
+      ]
+    }
+  ]
+  selectElement('.post-question', 'single').style.display = "none"
+  selectElement('.post-levels', 'single').style.display = "block"
+}
+
+async function addLevels(event){
+  event.preventDefault()
+  let title = selectElement('input[name="titleLevelThird"]', 'single').value
+  let image = selectElement('input[name="urlLevelThird"]', 'single').value
+  let text = selectElement('input[name="descriptionLevelThird"]').value
+  let minValue = parseInt(selectElement('input[name="hitsThird"]').value)
+
+  newQuizz.levels = [
+    {
+      title: selectElement('input[name="titleLevel"]', 'single').value,
+      image: selectElement('input[name="urlLevel"]', 'single').value,
+      text: selectElement('input[name="descriptionLevel"]').value,
+      minValue: parseInt(selectElement('input[name="hits"]').value)
+    },
+    {
+      title: selectElement('input[name="titleLevelSecond"]', 'single').value,
+      image: selectElement('input[name="urlLevelSecond"]', 'single').value,
+      text: selectElement('input[name="descriptionLevelSecond"]').value,
+      minValue: parseInt(selectElement('input[name="hitsSecond"]').value)
+    }
+  ]
+  if(title && image && text && minValue) {
+    newQuizz.levels.push({
+      title,
+      image,
+      text,
+      minValue
+    })
+  }
+
+  const { id, image: img, title:titulo } = await queryPostApi();
+  if(id) {
+    myQuizzes.push({id})
+    localStorage.setItem('myQuizes', myQuizzes)
+  }
+  selectElement('.post-levels', 'single').style.display = "none"
+  selectElement('.create-quizz-content', 'single').innerHTML = renderTemplateSuccess(id, titulo, img)
+  
 }
 
 function accordion(element) {
@@ -278,6 +434,10 @@ function accordion(element) {
     item.classList.add('closed')
   } )
   element.classList.remove('closed')
-
 }
+
+function hidden() {
+  selectElement('.create-quizz', 'single').style.display = "none";
+}
+
 renderTemplateScreen(selectElement('.list-quizz-area > .list-quizz > ul', 'single'), 'quizzes', TemplateCardQuizz)

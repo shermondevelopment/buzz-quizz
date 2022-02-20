@@ -5,7 +5,7 @@
 .create-quizz-content {
   width: 100%;
   max-width: 600px;
-  margin-top: 71px;
+  margin: 71px 0;
 }
 
 .create-quizz-title {
@@ -64,8 +64,6 @@
   display: flex;
   align-items: center;
   cursor: pointer;
-  transition: all 3.3s linear;
-
 }
 .closed .question-form {
   display: none;
@@ -80,4 +78,23 @@
   display: block;
   position: absolute;
   right: 15px;
+}
+
+.card-result {
+  position: relative;
+}
+
+.image-myquizz {
+  width: 500px;
+  height: 266px;
+  margin-top: 46px;
+}
+
+@media (max-width: 415px) {
+  .create-quizz-content {
+    width: max-content;
+  }
+  .quizz-info-basic, .form-create-quizz {
+    width: 375px;
+  }
 }

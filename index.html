@@ -19,7 +19,7 @@
     </header>
 
     <main class="d-flex justify-content-center">
-        <section class="add-quizz d-flex flex-direction-column justify-content-center" style="display: none">
+        <section class="add-quizz d-flex flex-direction-column justify-content-center">
             <section class="add-quizz-area d-flex justify-content-center align-items-center flex-direction-column">
                 <span class="add-quiz-notification">Você não criou nenhum quizz ainda :(</span>
                 <button class="add-quizz-action" onclick="createQuizz()">Criar Quizz</button>
@@ -56,132 +56,178 @@
 
             </div>
         </section>
-        <section class="create-quizz d-flex justify-content-center">
+        <section class="create-quizz d-flex justify-content-center" style="display: none">
             <div class="create-quizz-content">
-                <form method="post" class="d-flex flex-direction-column align-items-center" onsubmit="addQuizz(event)">
-                    <div class="quizz-info-basic d-flex align-items-center flex-direction-column" style="display: none">
+                <form method="post" class="d-flex post-basic flex-direction-column align-items-center"
+                    onsubmit="addQuizzInfoBasic(event)">
+                    <div class=" quizz-info-basic d-flex align-items-center flex-direction-column">
                         <h2 class="create-quizz-title">Comece pelo Começo</h2>
 
                         <div class="form-create-quizz ">
-                            <input type="text" name="title" placeholder="Título do seu quizz" pattern="\w{20,60}"
-                                required />
+                            <input type="text" name="titleQuizz" placeholder="Título do seu quizz" minlength="20"
+                                maxlength="65" required />
                             <input type="url" name="url" placeholder="URL da imagem do seu quizz" required />
                             <input type="text" name="qtQuestions" placeholder="Quantidade de perguntas do quizz"
-                                pattern="\d\d\d" required />
+                                pattern="[1-4]" required />
                             <input type="text" name="qtAnswers" placeholder="Quantidade de níveis do quizz"
-                                pattern="\d{2,}" required />
+                                pattern="[2-3]" required />
                         </div>
                         <button type="submit" class="button">Prosseguir pra criar perguntas</button>
                     </div>
                 </form>
-                <form method="post" class="d-flex flex-direction-column align-items-center" onsubmit="addQuizz(event)">
+                <form method="post" class="d-flex post-question flex-direction-column align-items-center"
+                    onsubmit="addQuizzQuestions(event)" style="display: none">
                     <div class="quizz-info-basic d-flex align-items-center flex-direction-column">
                         <h2 class="create-quizz-title">Crie suas perguntas</h2>
                         <!-- Pergunta 1 -->
-                        <div class="form-create-quizz question closed" onclick="accordion(this)">
+                        <div class="form-create-quizz question" onclick="accordion(this)">
                             <h2 class="title-input">Pergunta 1</h2>
                             <img src="app/img/edit.svg" class="edit" alt="edit" />
                             <div class="question-form">
-                                <input type="text" name="title" placeholder="Texto da Pergunta" pattern="\w{20,60}"
+                                <input type="text" name="title" placeholder="Texto da Pergunta" minlength="20"
                                     required />
-                                <input type="text" name="color" placeholder="Cor de fundo da pergunta" required />
+                                <input type="text" name="color" placeholder="Cor de fundo da pergunta" required
+                                    pattern="^#([A-Fa-f0-9]{6})" />
                             </div>
-
                             <div class="question-form">
                                 <h2 class="title-input">Resposta correta</h2>
-                                <input type="text" name="qtQuestions" placeholder="Resposta correta" pattern="\w+"
+                                <input type="text" name="questionCorrect" placeholder="Resposta correta" minlength="2"
                                     required />
-                                <input type="url" name="answersImage" placeholder="URL da imagem" pattern="\d{2,}"
-                                    required />
+                                <input type="url" name="questionCorrectImage" placeholder="URL da imagem" required />
                             </div>
-
                             <div class="question-form">
                                 <h2 class="title-input">Respostas incorretas</h2>
-                                <input type="text" name="answersFirst" placeholder="Resposta incorreta 1" pattern="\w+"
+                                <input type="text" name="questionIncorrectFirst" placeholder="Resposta incorreta 1"
+                                    required minlength="2" />
+                                <input type="url" name="questionIncorrectImageFirst" placeholder="URL da imagem 1"
                                     required />
-                                <input type="url" name="answersImageFirst" placeholder="URL da imagem 1" required />
                             </div>
                             <div class="question-form">
-                                <input type="text" name="answersSecond" placeholder="Resposta incorreta 2" pattern="\w+"
+                                <input type="text" name="questionIncorrectSecond" placeholder="Resposta incorreta 2"
+                                    minlength="2" required />
+                                <input type="url" name="questonIncorrectImageSecond" placeholder="URL da imagem 2"
                                     required />
-                                <input type="url" name="answersImageSecond" placeholder="URL da imagem 2" required />
                             </div>
                             <div class="question-form">
-                                <input type="text" name="answersThird" placeholder="Resposta incorreta 3" pattern="\w+"
+                                <input type="text" name="questionIncorrectThird" placeholder="Resposta incorreta 3"
+                                    minlength="2" required />
+                                <input type="url" name="questionIncorrectImageThird" placeholder="URL da imagem 3"
                                     required />
-                                <input type="url" name="answersImageThird" placeholder="URL da imagem 3" required />
                             </div>
                         </div>
                         <div class="form-create-quizz question closed" onclick="accordion(this)">
                             <h2 class="title-input">Pergunta 2</h2>
                             <img src="app/img/edit.svg" class="edit" alt="edit" />
                             <div class="question-form">
-                                <input type="text" name="title" placeholder="Texto da Pergunta" pattern="\w{20,60}"
-                                    required />
-                                <input type="text" name="color" placeholder="Cor de fundo da pergunta" required />
+                                <input type="text" name="titleTwo" placeholder="Texto da Pergunta"
+                                    pattern="(\w+\s?){20,65}" required />
+                                <input type="text" name="colorTwo" placeholder="Cor de fundo da pergunta" required
+                                    pattern="^#([A-Fa-f0-9]{6})" />
                             </div>
 
                             <div class="question-form">
                                 <h2 class="title-input">Resposta correta</h2>
-                                <input type="text" name="qtQuestions" placeholder="Resposta correta" pattern="\w+"
-                                    required />
-                                <input type="url" name="answersImage" placeholder="URL da imagem" pattern="\d{2,}"
-                                    required />
+                                <input type="text" name="questionCorrectTwo" placeholder="Resposta correta"
+                                    pattern="\w+" required />
+                                <input type="url" name="urlFirst" placeholder="URL da imagem" required />
                             </div>
 
                             <div class="question-form">
                                 <h2 class="title-input">Respostas incorretas</h2>
-                                <input type="text" name="answersFirst" placeholder="Resposta incorreta 1" pattern="\w+"
-                                    required />
-                                <input type="url" name="answersImageFirst" placeholder="URL da imagem 1" required />
+                                <input type="text" name="questiontitle1" placeholder="Resposta incorreta 1"
+                                    pattern="\w+" required />
+                                <input type="url" name="questioimage1" placeholder="URL da imagem 1" required />
                             </div>
                             <div class="question-form">
-                                <input type="text" name="answersSecond" placeholder="Resposta incorreta 2" pattern="\w+"
-                                    required />
-                                <input type="url" name="answersImageSecond" placeholder="URL da imagem 2" required />
+                                <input type="text" name="questiontitle2" placeholder="Resposta incorreta 2"
+                                    pattern="\w+" required />
+                                <input type="url" name="questionImage2" placeholder="URL da imagem 2" required />
                             </div>
                             <div class="question-form">
-                                <input type="text" name="answersThird" placeholder="Resposta incorreta 3" pattern="\w+"
-                                    required />
-                                <input type="url" name="answersImageThird" placeholder="URL da imagem 3" required />
+                                <input type="text" name="questiontitle3" placeholder="Resposta incorreta 3"
+                                    pattern="\w+" required />
+                                <input type="url" name="questionImage3" placeholder="URL da imagem 3" required />
                             </div>
                         </div>
                         <div class="form-create-quizz question closed" onclick="accordion(this)">
                             <h2 class="title-input">Pergunta 3</h2>
                             <img src="app/img/edit.svg" class="edit" alt="edit" />
                             <div class="question-form">
-                                <input type="text" name="title" placeholder="Texto da Pergunta" pattern="\w{20,60}"
-                                    required />
-                                <input type="text" name="color" placeholder="Cor de fundo da pergunta" required />
+                                <input type="text" name="titleThree" placeholder="Texto da Pergunta"
+                                    pattern="(\w+\s?){20,65}" required />
+                                <input type="text" name="colorThree" placeholder="Cor de fundo da pergunta" required
+                                    pattern="^#([A-Fa-f0-9]{6})" />
                             </div>
 
                             <div class="question-form">
                                 <h2 class="title-input">Resposta correta</h2>
-                                <input type="text" name="qtQuestions" placeholder="Resposta correta" pattern="\w+"
+                                <input type="text" name="questionCorrect4" placeholder="Resposta correta" pattern="\w+"
                                     required />
-                                <input type="url" name="answersImage" placeholder="URL da imagem" pattern="\d{2,}"
-                                    required />
+                                <input type="url" name="url4" placeholder="URL da imagem" required />
                             </div>
 
                             <div class="question-form">
                                 <h2 class="title-input">Respostas incorretas</h2>
-                                <input type="text" name="answersFirst" placeholder="Resposta incorreta 1" pattern="\w+"
-                                    required />
-                                <input type="url" name="answersImageFirst" placeholder="URL da imagem 1" required />
+                                <input type="text" name="questionInocrrect5" placeholder="Resposta incorreta 1"
+                                    pattern="\w+" required />
+                                <input type="url" name="url5" placeholder="URL da imagem 1" required />
                             </div>
                             <div class="question-form">
-                                <input type="text" name="answersSecond" placeholder="Resposta incorreta 2" pattern="\w+"
-                                    required />
-                                <input type="url" name="answersImageSecond" placeholder="URL da imagem 2" required />
+                                <input type="text" name="questionIncorrect6" placeholder="Resposta incorreta 2"
+                                    pattern="\w+" required />
+                                <input type="url" name="url6" placeholder="URL da imagem 2" required />
                             </div>
                             <div class="question-form">
-                                <input type="text" name="answersThird" placeholder="Resposta incorreta 3" pattern="\w+"
-                                    required />
-                                <input type="url" name="answersImageThird" placeholder="URL da imagem 3" required />
+                                <input type="text" name="questionInocrrect7" placeholder="Resposta incorreta 3"
+                                    pattern="\w+" required />
+                                <input type="url" name="url7" placeholder="URL da imagem 3" required />
                             </div>
                         </div>
-                        <button type="submit" class="button">Prosseguir pra criar perguntas</button>
+                        <button type="submit" class="button">Prosseguir pra criar niveis</button>
                     </div>
+                </form>
+                <form method="post" class="d-flex post-levels flex-direction-column align-items-center"
+                    onsubmit="addLevels(event)" style="display: none">
+                    <div class="form-create-quizz question" onclick="accordion(this)">
+                        <h2 class="title-input">Nível 1</h2>
+                        <img src="app/img/edit.svg" class="edit" alt="edit" />
+                        <div class="question-form">
+                            <input type="text" name="titleLevel" placeholder="Titulo do nível" required
+                                minlength="20" />
+                            <input type="text" name="hits" placeholder="% de acertos mínima" required
+                                pattern="^[1-9]$|^[1-9][0-9]$|^(100)$" />
+                            <input type="url" name="urlLevel" placeholder="URL da imagem do nível" required />
+                            <input type="text" name="descriptionLevel" placeholder="Descrição do nível" required
+                                minlength="30" />
+                        </div>
+                    </div>
+                    <div class="form-create-quizz question closed" onclick="accordion(this)">
+                        <h2 class="title-input">Nível 2</h2>
+                        <img src="app/img/edit.svg" class="edit" alt="edit" />
+                        <div class="question-form">
+                            <input type="text" name="titleLevelSecond" placeholder="Titulo do nível" required
+                                minlength="20" />
+                            <input type="text" name="hitsSecond" placeholder="% de acertos mínima" required
+                                pattern="^[1-9]$|^[1-9][0-9]$|^(100)$" />
+                            <input type="url" name="urlLevelSecond" placeholder="URL da imagem do nível" required />
+                            <input type="text" name="descriptionLevelSecond" placeholder="Descrição do nível" required
+                                minlength="30" />
+                        </div>
+                    </div>
+                    <div class="form-create-quizz question closed" onclick="accordion(this)">
+                        <h2 class="title-input">Nível 3</h2>
+                        <img src="app/img/edit.svg" class="edit" alt="edit" />
+                        <div class="question-form">
+                            <input type="text" name="titleLevelThird" placeholder="Titulo do nível" minlength="20" />
+                            <input type="text" name="hitsThird" placeholder="% de acertos mínima"
+                                pattern="^[1-9]$|^[1-9][0-9]$|^(100)$" />
+                            <input type="url" name="urlLevelThird" placeholder="URL da imagem do nível" />
+                            <input type="text" name="descriptionLevelThird" placeholder="Descrição do nível"
+                                minlength="30" />
+                        </div>
+                    </div>
+                    <button type="submit" class="button">Finalizar Quizz</button>
+
                 </form>
             </div>
         </section>
