@@ -48,7 +48,11 @@ const renderCardQuizzScreen = async() => {
 
 function openedQuizz(element) {
     const sectionListQuizzToInvisible = selectElement('.add-quizz', 'single')
-    makeElementInivisble(sectionListQuizzToInvisible)
+        //const quizzQuestion = selectElement('.quiz-questions', 'single')
+        /* esconde a lista de quizz */
+    makeElementInivisble(sectionListQuizzToInvisible, true)
+        /* mostra um unico quizz */
+        //makeElementInivisble(quizzQuestion, false)
     document.getElementById("open-quiz").style.display = 'block';
 
     let myPromise = queryGetApi(`quizzes/${element.dataset.id}`);
@@ -68,33 +72,49 @@ function titleQuiz(quiz) {
     for (let i in quiz.questions) questionsQuiz(quiz.questions[i]);
 }
 
-function questionsQuiz(quiz) {
+function questionsQuiz(question) {
     let divnova = document.createElement("div");
-    divnova.className = "show-questions";
+    divnova.className = "show-questions " + question.title.trim().replaceAll(' ', '-');
     document.getElementById("open-quiz").appendChild(divnova);
     let divtitle = document.createElement("div");
     divtitle.className = "show-title";
-    divtitle.style.backgroundColor = quiz.color;
+    divtitle.style.backgroundColor = question.color;
     divnova.appendChild(divtitle);
     let divp = document.createElement("p");
     divp.className = "title-question d-flex justify-content-center align-items-center";
-    divp.innerHTML = quiz.title;
+    divp.innerHTML = question.title;
     divtitle.appendChild(divp);
-    let answers = shuffleArray(quiz.answers);
+    let answers = shuffleArray(question.answers);
     for (let i in answers) {
         let divfig = document.createElement("figure");
         divfig.className = "figure-question";
+        divfig.setAttribute("data-isTrue", answers[i].isCorrectAnswer.toString());
         divnova.appendChild(divfig);
         let divimg = document.createElement("img");
         divimg.src = answers[i].image;
         divimg.style.height = "113px";
         divimg.style.width = "163px";
         divimg.style.marginRight = "12px";
+        divimg.onclick = questionAnswer;
         divfig.appendChild(divimg);
         let divcap = document.createElement("figcaption");
         divcap.className = "question-caption";
-        divcap.innerHTML = answers[i].text
+        divcap.innerHTML = answers[i].text;
         divfig.appendChild(divcap);
+    }
+}
+
+function questionAnswer(answers) {
+    const question = answers.explicitOriginalTarget.parentElement.parentElement;
+    const atual = answers.explicitOriginalTarget.parentElement;
+    for (let i in question.children) {
+        if (question.children[i].tagName == 'FIGURE') {
+            let answer = question.children[i];
+            if (answer.getAttribute('data-isTrue') == 'false') answer.children[1].style.color = '#FF0B0B';
+            else answer.children[1].style.color = '#009C22';
+            if (answer != atual) answer.style.opacity = '0.3';
+            console.log(answer);
+        }
     }
 }
 
