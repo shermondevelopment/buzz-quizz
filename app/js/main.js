@@ -59,16 +59,22 @@ function openedQuizz(element) {
     myPromise.then(titleQuiz);
 }
 
+let quantQuestion = 0;
+let rightQuestions = 0;
+
 function titleQuiz(quiz) {
+    document.body.style.overflow = 'hidden';
     let divnova = document.createElement("div");
     divnova.className = "show-quiz figure-quiz";
     divnova.style.backgroundImage = `url(${quiz.image})`;
     divnova.innerHTML = `<div class = "figure-opacity"> </div>`;
     document.getElementById("open-quiz").appendChild(divnova);
+    document.getElementById("open-quiz").style.overflow = 'hidden';
     let divp = document.createElement("p");
     divp.className = "title-quiz d-flex justify-content-center align-items-center";
     divp.innerHTML = quiz.title;
     divnova.appendChild(divp);
+    quantQuestion = quiz.questions.length;
     for (let i in quiz.questions) questionsQuiz(quiz.questions[i]);
 }
 
@@ -114,9 +120,10 @@ function questionAnswer(answers) {
             if (answer.getAttribute('data-isTrue') == 'false') answer.children[1].style.color = '#FF0B0B';
             else answer.children[1].style.color = '#009C22';
             if (answer != atual) answer.style.opacity = '0.3';
-            console.log(answer.children[0]);
         }
     }
+    if (atual.getAttribute('data-isTrue') == 'true') rightQuestions++;
+    setTimeout(() => { window.scrollBy(0, 530); }, 2000);
 }
 
 function shuffleArray(arr) {
