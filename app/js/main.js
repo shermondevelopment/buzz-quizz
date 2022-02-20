@@ -110,10 +110,11 @@ function questionAnswer(answers) {
     for (let i in question.children) {
         if (question.children[i].tagName == 'FIGURE') {
             let answer = question.children[i];
+            answer.children[0].style.pointerEvents = 'none';
             if (answer.getAttribute('data-isTrue') == 'false') answer.children[1].style.color = '#FF0B0B';
             else answer.children[1].style.color = '#009C22';
             if (answer != atual) answer.style.opacity = '0.3';
-            console.log(answer);
+            console.log(answer.children[0]);
         }
     }
 }
