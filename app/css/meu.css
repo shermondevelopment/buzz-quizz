@@ -137,6 +137,7 @@
     align-items: center;
     text-align: center;
     color: #484848;
+    margin-top: 10px;
 }
 
 .result-button {
@@ -145,4 +146,13 @@
     height: 44px;
     background: #EC362D;
     border-radius: 15px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #FFF5F4;
 }

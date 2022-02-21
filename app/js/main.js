@@ -166,8 +166,8 @@ function showResult(div) {
     let button = document.createElement("input");
     button.className = 'result-button';
     button.type = "button";
-    divnova.appendChild(button);
-    console.log(quizLevels);
+    button.value = "Reiniciar Quizz";
+    div.appendChild(button);
 }
 
 function shuffleArray(arr) {
