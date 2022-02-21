@@ -4,6 +4,7 @@
     width: 100%;
     max-width: 1051px;
     height: inherit;
+    padding-bottom: 66px;
 }
 
 .title-quiz {
@@ -95,4 +96,53 @@
     font-size: 13px;
     line-height: 15px;
     color: black;
+}
+
+.result-title {
+    height: 99px;
+    width: 340px;
+    z-index: 1;
+    background-color: #EC362D;
+}
+
+.show-result {
+    height: 500px;
+    width: 375px;
+    margin-top: 24px;
+    padding-left: 18px;
+    padding-right: 18px;
+    padding-top: 18px;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+}
+
+.figure-quiz {
+    width: 375px;
+    height: 142px;
+    position: relative;
+    overflow: hidden;
+}
+
+.result-caption {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 17px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #484848;
+}
+
+.result-button {
+    position: relative;
+    width: 220.32px;
+    height: 44px;
+    background: #EC362D;
+    border-radius: 15px;
 }

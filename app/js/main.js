@@ -59,8 +59,9 @@ function openedQuizz(element) {
     myPromise.then(titleQuiz);
 }
 
-let quantQuestion = 0;
+let quantQuestions = 0;
 let rightQuestions = 0;
+let quizLevels;
 
 function titleQuiz(quiz) {
     document.body.style.overflow = 'hidden';
@@ -74,11 +75,12 @@ function titleQuiz(quiz) {
     divp.className = "title-quiz d-flex justify-content-center align-items-center";
     divp.innerHTML = quiz.title;
     divnova.appendChild(divp);
-    quantQuestion = quiz.questions.length;
-    for (let i in quiz.questions) questionsQuiz(quiz.questions[i]);
+    quantQuestions = quiz.questions.length;
+    quizLevels = quiz.levels;
+    for (let i in quiz.questions) questionsQuiz(quiz.questions[i], i);
 }
 
-function questionsQuiz(question) {
+function questionsQuiz(question, qn) {
     let divnova = document.createElement("div");
     divnova.className = "show-questions " + question.title.trim().replaceAll(' ', '-');
     document.getElementById("open-quiz").appendChild(divnova);
@@ -93,8 +95,9 @@ function questionsQuiz(question) {
     let answers = shuffleArray(question.answers);
     for (let i in answers) {
         let divfig = document.createElement("figure");
+        divfig.id = `${qn}`;
         divfig.className = "figure-question";
-        divfig.setAttribute("data-isTrue", answers[i].isCorrectAnswer.toString());
+        divfig.setAttribute("data-isTrue", `${answers[i].isCorrectAnswer}`);
         divnova.appendChild(divfig);
         let divimg = document.createElement("img");
         divimg.src = answers[i].image;
@@ -124,6 +127,47 @@ function questionAnswer(answers) {
     }
     if (atual.getAttribute('data-isTrue') == 'true') rightQuestions++;
     setTimeout(() => { window.scrollBy(0, 530); }, 2000);
+    if (parseInt(atual.id) + 1 == quantQuestions) {
+        showResult(question.parentElement);
+    }
+}
+
+function showResult(div) {
+    document.body.style.overflow = 'auto';
+    rightQuestions = (rightQuestions / quantQuestions) * 100;
+    let nivel = 0;
+    for (let i in quizLevels) {
+        if (quizLevels[i].minValue <= rightQuestions) {
+            nivel = i;
+        }
+    }
+    let divnova = document.createElement("div");
+    divnova.className = "show-result";
+    div.appendChild(divnova);
+    let divtitle = document.createElement("div");
+    divtitle.className = "result-title";
+    divnova.appendChild(divtitle);
+    let divp = document.createElement("p");
+    divp.className = "title-question d-flex justify-content-center align-items-center";
+    divp.innerHTML = quizLevels[nivel].title;
+    divtitle.appendChild(divp);
+    let divfig = document.createElement("figure");
+    divfig.className = "figure-result";
+    divnova.appendChild(divfig);
+    let divimg = document.createElement("img");
+    divimg.src = quizLevels[nivel].image;
+    divimg.style.height = "255px";
+    divimg.style.width = "340px";
+    divfig.appendChild(divimg);
+    let divcap = document.createElement("figcaption");
+    divcap.className = "result-caption";
+    divcap.innerHTML = quizLevels[nivel].text;
+    divfig.appendChild(divcap);
+    let button = document.createElement("input");
+    button.className = 'result-button';
+    button.type = "button";
+    divnova.appendChild(button);
+    console.log(quizLevels);
 }
 
 function shuffleArray(arr) {
